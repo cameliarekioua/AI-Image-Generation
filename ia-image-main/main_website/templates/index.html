@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projet ARTISHOW</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+      padding: 2em;
+      color: #333;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 2em;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 0.2em;
+    }
+
+    h2 {
+      margin-top: 0;
+      font-size: 1.5em;
+      color: #7a0029;
+    }
+
+    p {
+      font-size: 1.1em;
+      max-width: 800px;
+      margin: 0.5em auto;
+    }
+
+    .section {
+      max-width: 900px;
+      margin: 0 auto;
+      background-color: white;
+      border-radius: 12px;
+      padding: 1.5em;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      margin-bottom: 2em;
+    }
+
+    .button {
+      display: inline-block;
+      margin-top: 1em;
+      padding: 0.8em 1.2em;
+      background-color: #7a0029;
+      color: white;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background-color 0.3s;
+    }
+
+    .button:hover {
+      background-color: #7a002998;
+    }
+
+    footer {
+      text-align: center;
+      color: #888;
+      margin-top: 3em;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Projet ARTISHOW</h1>
+    <p><strong>Modèles d’IA générative pour la création d’images simples</strong></p>
+  </header>
+
+  <div class="section">
+    <h2>Présentation</h2>
+    <p>
+      Ce projet vise à explorer l'utilisation de modèles d'IA générative pour générer automatiquement des images simples à partir de texte ou de manière non guidée.
+      Une interface web interactive permet d'expérimenter différents modes de génération, accompagnés de contenus pédagogiques pour mieux comprendre les modèles utilisés.
+    </p>
+  </div>
+
+  <div class="section">
+    <h2>Génération par prompt</h2>
+    <p>
+      Sur cette page, vous pouvez entrer une <strong>description textuelle</strong> pour générer une image contenant des <strong>formes géométriques simples</strong> :
+      cercles, carrés, triangles, losanges, disques. Vous pouvez contrôler la taille, la couleur et la position.
+    </p>
+    <p><strong>Exemples de prompts :</strong></p>
+    <ul>
+        <li>un carré vert en bas à droite</li>
+      <li>un cercle rouge en haut à gauche et un triangle bleu au centre</li>
+    </ul>
+    <a href="http://localhost:5001" class="button">Accéder à la génération par prompt</a>
+  </div>
+
+  <div class="section">
+    <h2> Commande vocale</h2>
+    <p>
+      Cette page permet de <strong>parler</strong> directement à l’interface. La commande vocale est transcrite en texte, puis utilisée comme prompt pour générer une image.
+    
+    </p>
+    <a href="http://localhost:5003" class="button">Accéder à la génération par la voix</a>
+  </div>
+
+  <div class="section">
+    <h2>Génération non guidée de visages</h2>
+    <p>
+      Ici, vous pouvez générer aléatoirement des <strong>visages</strong>, sans fournir de prompt.
+      Cette page illustre le fonctionnement d’un <strong>modèle de diffusion non conditionné</strong>.
+    </p>
+    <a href="http://localhost:5002" class="button">Accéder à la génération de visages</a>
+  </div>
+
+  <div class="section">
+    <h2>Notebooks explicatifs</h2>
+    <p>
+      Cette page regroupe plusieurs notebooks convertis en HTML, pour mieux comprendre le fonctionnement des architectures utilisées :
+    </p>
+    <ul>
+      <li><strong>PyTorch :</strong> tutoriel pour apprendre les bases de pytorch</li>
+      <li><strong>GAN :</strong> principe théorique des réseaux antagonistes génératifs et exemples</li>
+      <li><strong>Modèle de neurones :</strong> Théorie derrière le fonctionnement des réseaux de neurones</li>
+      <li><strong>Diffusion :</strong> principe théorique des modèles de diffusions et exemples</li>
+      <li><strong>Clip :</strong> fonctionnement de CLIP</li>
+    </ul>
+    <a href="notebooks.html" class="button">Voir les notebooks</a>
+  </div>
+
+  <footer>
+    Projet réalisé dans le cadre du cours du projet ARTISHOW – Télécom Paris, 2025.
+  </footer>
+</body>
+</html>

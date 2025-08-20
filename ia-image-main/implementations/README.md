@@ -1,0 +1,1 @@
+Dossier contenant l'implémentation des GANs et des modèles à diffusion sur le jeu de données MNIST, (pour comprendre le conceot des modèles cf. dossier implementations)

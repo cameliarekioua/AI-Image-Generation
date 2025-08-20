@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MonSite</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Chargement de MathJax -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body>
+    <h1>Diffusion</h1>
+
+    <!-- Système d'onglets -->
+    <div class="tab-container">
+        <div class="tab-buttons">
+            <button class="tab-button" onclick="showTab('.explications', 1)">Explication générale</button>
+            <button class="tab-button" onclick="showTab('.calculs')">Calculs</button>
+        </div>
+    </div>
+
+
+    <div id="explications" class="explications">
+        <p>
+        Les modèles à diffusion sont des modèles qui génèrent des images en partant d'un bruit et en débruitant ce dernier jusqu'à obtenir une image plausible. Ils ont été introduis en 2015 par le papier <a href="https://arxiv.org/pdf/1503.03585" target="_blank">Deep Unsupervised Learning using Nonequilibrium Thermodynamics</a>, ont été popularisés par le papier <a href="https://arxiv.org/pdf/2006.11239" target="_blank">Denoising Diffusion Probabilistic Models</a> en 2020 et ont par la suite reçu divers améliorations permettant de générer des images de plus en plus réalistes et ce de plus en plus rapidement. Ils sont la technologie derrière de nombreux modèles de générations d'image célèbres tels que DALL-E 2, Stable Diffusion et Midjourney.
+        </p>
+
+        <!-- Pour l'image DALL-E -->
+        <div class="image-container">
+            <img src="assets/dall-e 2 examples.png" alt="Images générées par DALL-E 2" class="centered-image">
+        </div>
+
+        <p>
+        Intéressons nous au formalisme mathématique derrière ces modèles. Supposons que nous avons un jeu de données contenant N images $x_1, x_2, ..., x_N$ et que nous voulons créer un modèle qui génère des images semblables à celles contenus dans ce jeu de données. Mathématiquement, cela revient à dire que les images de notre jeu de données sont des échantillons provenant d'une certaines distribution de probabilité $p$ et que nous voulons créer un modèle $p_{\theta}$ qui approxime cette distribution. Et comme on sait que les réseaux de neurones peuvent approximer à peu près n'importe quelle fonction, on va chercher notre modèle sous cette forme. <br><br>
+
+        Lorsqu'on dit qu'un modèle approxime une distribution de probabilité, cela signifie qu'à partir d'entrées quelconques, il génère des sorties similaires à celles de la distribution. Mais que donner comme entrées au modèle? Notre réseau de neurones étant déterministe, on ne peut pas donner une entrée fixe comme par exemple un carré noir car alors il génèrerait toujours la même image. Il est donc nécessaire de lui fournir des nombres aléatoires, et on choisit généralement de lui donner du bruit gaussien, c'est-à-dire une matrice de nombres tirés d'une distribution normale $\mathcal{N}(0,1) : x \mapsto \frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}$.
+        
+        <!-- Pour l'image de bruit gaussien -->
+        <div class="image-container">
+            <img src="assets/gaussian_noise.png" alt="Exemple de bruit gaussien" class="noise-image">
+            <div class="image-caption">Exemple de bruit gaussien</div>
+        </div>
+        </p>
+
+        <p>
+        La tâche de notre modèle est donc la suivante : produire une image plausible à partir d'un bruit gaussien. Une approche naïve serait de donner en entrée un bruit au réseau de neurones, de comparer sa sortie à une image de notre jeu de données et de l'entraîner ainsi par descente de gradient. Cependant empiriquement cela ne fonctionne pas car l'entraînement n'est pas assez guidé. Le réseau génère initialement du bruit et en comparant ce bruit à une image avant de changer d'image à la prochaine itération, on ne lui fournit pas un signal d'erreur suffisament clair pour apprendre. Pour simplifier la tâche du modèle, on peut changer le protocole d'entraînement : on lui donne une image bruitée et on lui demande de produire une version légèrement moins bruitée de cette image. Si le modèle apprend à réaliser cette tâche pour tout niveau de bruit on pourra partir d'un bruit gaussien et lui demander de le débruiter petit à petit jusqu'à obtenir une image plausible.
+        </p> <br>
+
+        <p>
+        Cette façon de présenter les modèles à diffusion est assez commune et permet de comprendre de manière intuitive le fonctionnement de ces modèles mais elle n'explique pas un certain nombre de propriétés de ces derniers. Par exemple pourquoi est ce que des bruits différents conduisent à des images différentes, comment le modèle choisit-il d'associer un bruit à une image de chat et un autre bruit à un visage? Pour répondre à ces questions, il est intéressant de s'intéresser à l'espace dans lequel vivent les images.
+        </p> <br>
+
+        <h2>L'espace des images</h2>
+
+        <p>
+        Intéressons nous au cas d'un jeu d'images rgb de taille 128x128 pixels. Si les valeurs des pixels sont comprises entre 0 et 1 on peut voir l'espace des images possibles comme un hypercube de côté 1 et de dimension 128x128x3. Le processus de diffusion peut alors être réinterprété comme un déplacement dans cet hypercube. Les images de notre jeu de données sont des zones de haute densité de probabilité de l'hypercube et le rôle de notre modèle est de partir d'un bruit gaussien (un point dans l'hypercube) et de le déplacer vers un point d'une zone de forte densité de probabilité et donc susceptible de contenir une image provenant de notre jeu de données.
+        </p>
+
+        <!-- Pour l'illustration de l'espace des images -->
+        <div class="image-container">
+            <img src="assets/image_space.png" alt="Espace des images" class="centered-image">
+            <div class="image-caption">Représentation schématique de l'espace des images.</div>
+        </div>
+
+        <p>
+        Le modèle va donc apprendre un champ de vecteurs, il associe à chaque point de l'espace un direction dans laquelle bouger le point pour se rapprocher d'une vraie image. Cela explique alors pourquoi des bruits différents conduisent à des images différentes. Si le modèle décide de générer une image de panda c'est parce que le bruit initial se trouve dans un point du champ de vecteur qui pointe vers une portion de l'espace contenant des images de panda.
+        </p> <br>
+
+        <p>
+        Pour entraîner le modèle on doit lui fournir des images à différents niveaux de bruits en s'assurant qu'on couvre bien l'ensemble de l'espace entre les images de notre distribution et le bruit gaussien. Il faut donc ajouter du bruit à l'image initiale jusqu'à ce que cette dernière ne contienne plus aucune information. On nomme ce processus le "noising process".
+
+        <!-- Pour l'illustration du noising process -->
+        <div class="image-container">
+            <img src="assets/noising_process.png" alt="Illustration du noising process" class="noising-image">
+            <div class="image-caption">Illustration du noising process : une image est progressivement bruitée jusqu'à ne plus contenir d'information.</div>
+        </div>
+
+        Le processus inverse qui prend une image bruitée et renvoie une image légèrement moins bruitée se nomme quand à lui le "denoising process".
+        </p> <br>
+
+        <p>
+        Il existe de nombreuses façons de définir le noising et le denoising process. Différentes formulations permettent d'améliorer la qualité des images ou de réduire le nombre d'étapes de débruitage. Le papier DDPM de 2020 utilise par exemple le noising process $x_{t+1} = \sqrt{1 - \beta_t} \cdot x_t + \sqrt{\beta_t} \cdot \epsilon_t$ où $\epsilon_t$ est un bruit gaussien et $\beta_t$ est un hyperparamètre, ce qui (après bien des calculs) conduit au denoising process $x_{t-1} = \frac{1}{\sqrt{\alpha_t}} \cdot (x_t - \frac{\beta_t}{\sqrt{1 - \overline{\alpha}_t}} \cdot \epsilon_{\theta}(x_t, t))$. <br><br>
+
+        Cependant, des formulations plus simples sont possibles et parfois toutes aussi performantes, comme le montre le papier <a href="https://arxiv.org/pdf/2305.03486" target="_blank">Iterative 𝛼-(de)Blending: a Minimalist Deterministic Diffusion Model</a> qui utilise tout simplement une interpolation linéaire entre l'image et le bruit pour le noising process $ x_t = (1-t) \cdot x_0 + t \cdot x_1 $ avec t tiré uniformément entre 0 et 1 et $ x_{t-1} = x_t + \frac{1}{T} \cdot D_{\theta}(x_t, t) $ où $ D_{\theta}(x_t, t) $ est la sortie du réseau de neurones auquel on a appris à prédire $x_1 - x_0$ (on note qu'il s'agit d'un vecteur dans l'espace des images pointant vers une image du jeu de données x0 à partir du bruit gaussien $x_1$).
+        </p>
+
+    </div>
+
+    <div id="calculs" class="calculs invisible">
+        On définit le processus de bruitage comme une chaîne de markov allant de $x_0$ à $x_T$ où $x_0$ est l'image d'origine et $x_T$ est le bruit gaussien.
+        <div class="image-container">
+            <img src="assets/The-forward-and-backward-processes-of-the-diffusion-model-The-credit-of-the-used-images.png" alt="forward and backward process" class="centered-image">
+        </div>
+        On note $q(x_t | x_{t-1})$ la probabilité de passer de l'image $x_{t-1}$ à l'image $x_t$. On note aussi $\alpha_t = 1 - \beta_t$ et $\overline{\alpha}_t = \prod_{s=1}^t \alpha_s$. <br>
+        On peut montrer que la probabilité de passer de $x_0$ à $x_t$ est donnée par la formule suivante :
+        $ q(x_t | x_0) = \sqrt{\overline{\alpha}_t} x_0 + \sqrt{1 - \overline{\alpha}_t} \epsilon $ où $ \epsilon $ ~ $ N(0, I) $. <br>
+        Autrement dit, on a une formule explicite qui nous permet de passer de $x_0$ à n'importe quel niveau de bruit $x_t$ du processus de bruitage. <br><br>
+
+        On note désormais $p(x_{t-1} | x_t)$ la probabilité de passer de l'image $x_t$ à l'image $x_{t-1}$.<br>
+        On paramétrise cette probabilité par un réseau de neurones $p_{\theta}(x_{t-1} | x_t)$ de paramètres $ \theta $ et par symétrie avec le forward process on la cherche également sous la forme d'une gaussienne $p(x_{t-1} | x_t) = \mathcal{N}(x_{t-1}; \mu_{\theta}(x_t, t), \Sigma_{\theta}(x_t, t))$. <br>
+        L'objectif est donc de trouver les paramètres $ \theta $ tels que les zones de l'espace correspondant au jeu de données soient des zones de haute densité de probabilité pour la modèle, c'est-à-dire qu'on veut maximiser la probabilité $ p_{\theta}(x_0) $. <br><br>
+
+        On minise donc classiquement : $L = E[-log(p_{\theta}(x_0))]$. <br>
+
+        Après calculs, on trouve que $L$ est équivalent à : $L = E[\frac{1}{2} ||\epsilon - \epsilon_{\theta}(x_t, t)||^2]$ où $\epsilon_{\theta}(x_t, t)$ est la sortie du réseau de neurones. <br>
+
+        Autrement dit, on cherche à minimiser la distance entre le bruit que l'on a ajouté à l'image et le bruit que le modèle prédit. <br>
+        <div class="image-container">
+            <img src="assets/training_algo.png" alt="training algorithm" class="centered-image">
+        </div>
+
+        Et on peut également montrer que $p_{\theta}(x_{t-1} | x_t)$ est une gaussienne de moyenne $ \mu_{\theta}(x_t, t) = \frac{1}{\sqrt{\alpha_t}}(x_t - \frac{\beta_t}{\sqrt{1 - \overline{\alpha}_t}} \epsilon_{\theta}(x_t, t)) $ et de variance $ \Sigma_{\theta}(x_t, t) = \sigma^2_{\theta}(x_t, t) I $ où $\sigma^2_{\theta}(x_t, t) = \frac{1 - \overline{\alpha}_{t-1}}{1 - \overline{\alpha}_t}$, ce qui permet de progressivement reconstruire $ x_0 $ à partir d'un bruit gaussien $ x_T $. <br>
+        <div class="image-container">
+            <img src="assets/sampling_algo.png" alt="sampling algorithm" class="centered-image">
+        </div>
+        
+    </div>
+
+
+    <script>
+        function showTab(classe) {
+            if (classe == ".explications"){
+                autre_classe = ".calculs";
+            } else {
+                autre_classe = ".explications";
+            }
+            var contents1 = document.querySelectorAll(classe);
+            contents1.forEach(function(content) {
+                if (content.classList.contains('invisible')) {
+                    content.classList.remove('invisible');
+                }
+            });
+            var contents2 = document.querySelectorAll(autre_classe);
+            contents2.forEach(function(content) {
+                if (!content.classList.contains('invisible')) {
+                    content.classList.add('invisible');
+                }
+            });
+
+            // Rafraîchir MathJax
+            if (window.MathJax) {
+                MathJax.typeset();
+            }
+        }
+    </script>
+
+</body>
+</html>

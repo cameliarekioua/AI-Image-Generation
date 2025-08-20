@@ -1,0 +1,99 @@
+##### DIFFUSION #####
+
+--- score-based generative models ---
+
+# vidéo expliquant ce que sont les score-based generative models et pourquoi ce concept mathématique généralise les modèles à diffusion
+https://www.youtube.com/watch?v=B4oHJpEJBAA&t=1739s&ab_channel=Outlier
+
+
+
+--- modèles à diffusion ---
+
+# blog qui développe les raisonnements mathématiques permettant de conçevoir des modèles à diffusion
+https://lilianweng.github.io/posts/2021-07-11-diffusion-models/
+
+# papier scientifique qui a popularisé les modèles à diffusion
+https://arxiv.org/pdf/2006.11239
+
+# vidéo expliquant comment implémenter des modèles à diffusion en Pytorch
+https://www.youtube.com/watch?v=TBCRlnwJtZU&ab_channel=Outlier
+
+##### Pytorch #####
+sheet contenant la doc de toutes les fonctions Pytorch : https://pytorch.org/tutorials/beginner/ptcheat.html
+
+
+
+--- flow matching ---
+
+# papier scientifique qui a créé et popularisé la méthode
+https://arxiv.org/pdf/2210.02747
+
+# vidéo youtube qui explique le papier dans les grandes lignes
+https://www.youtube.com/watch?v=7NNxK3CqaDk
+
+
+
+--- diffusion transformers (DiT)
+
+# papier qui étudie l'impact du remplacement du UNet usuellement utilisé dans les modèles à diffusion par un transformer, il présente l'achitecture de transformer utilisée, la façon dont les condtionnements sont ajoutés et étudie les performances de l'architecture et la façon dont les performances s'améliore avec l'augmentation de la puissance de calcul allouée
+https://arxiv.org/pdf/2212.09748
+
+
+
+
+########## Variational autoencoders ##########
+
+---- autoencoders ----
+1. https://www.youtube.com/watch?v=hZ4a4NgM3u0
+Résumé : explication du fonctionnement des autoencoders
+Les autoencodeurs ont pour but de décrire les données avec le moins de caractéristiques possibles.
+Un autoencodeur est formé d'un encodeur, l'espace latent et d'un décodeur. 
+- L'encodeur compresse l'entrée, l'espace latent donne (la dimension finale) la donnée compressée et le décodeur reconstruit la donnée à partir de la donnée compressée
+Pour entrainer un tel modèle, il faut améliorer le plus possible le décodeur pour qu'il puisse reconstruire des données à partir des données compressées, et d'améliorer l'encodeur pour qu'il garde les infos les plus pertinentes pour s'assurer que la donnée original peut facilement être reconstruite
+Ainsi, pour pouvoir comparer des images par exemple (entrée et reconstruite), on peut adopter comme fonction cout la moyenne pixel a pixel des images (1/n somme (xi-yi)^2)
+###exemple sur mnist : si vous voulons encoder une classe, tous les pixels doivent former un même cluster dans l'espace latent
+!!! On doit adapter la dimension de l'espace latent
+Quand on rajoute du bruit -> l'autoencodeur galère à reconstruire une image -> VAE
+
+--- VAE ---
+2. https://www.youtube.com/watch?v=qJeaCHQ1k2w
+Résumé : L'espace latent est très désorganisé -> VAE
+Notre but est de générer de nouvelles images à partir d'une distribution donnée p(x) (représentant nos images). Le problème c'est que nous n'avons accès qu'à des instances de p(x).
+C'est pourquoi, nous introduisons une autre distribution (latente) p(z), qui capture les caractéristiques principales des données. Comme p(x) et p(z) sont dans 2 espaces différent, nous avons besoin de les connecter avec P(z|x)(x-> z) et P(x|z) (z->x)
+----> Si nous pouvons échantilloner des vecteur latents à partir de P(z|x), ces latents sont susceptibles d'être générés par p(x), ainsi si nous reconstruisons des images à partir de ce p(z), nous générons effectivement de nouveaux échantillons à partir de p(x)
+Mais ne conaissant pas la forme de p(z), nous allons supposer qu'elle suit une N(0,I), cette supposition nous permet de calculer p(x|z) : la proba de générer une image à partir d'un vecteur latent mais nous ne conaissant pas p(z|x) !!
+----> C'est la qu'intervient la partie variotionelle !! Nous allons approcher p(z|x) avec une distribution gaussienne q(z|x) = N(mu, sigma) avec mu et sigma que vous devons apprendre avec Variational Bayses
+Ainsi :
+- Nous allons créer un encodeur qui estime mu et sigma à partir des images
+- Nous allons ensuite créer un décodeur qui échantilloner des images à partir des variables lantentes échantillonées du q
+
+---> Utilisation de la formule de Bayes 
+L(x) = E_(q(z|x))[log(p(x|z))] - KL(q(z|x) | p(z))
+
+Le premier terme représente à quel point notre modèle peut reconstruire x à partir de z.
+Le deuxième la distance entre les 2 distributions q(z|x) et p(z).
+p(z) étant normale, nous imposons une distribution normale.
+
+La perte ELBO étant alors L(x,x') = L_2(x,x') + L_KL (N(mu, sigma) | N(0,1))
+Maintenant, au lieu de représenter notre image comme un point, on la représente comme une distribution N(mu, sigma) et le ensuite on echantillone cette distribution et le décodeur les reconstruit en image.
+Pour cela, nous allons rétropager La perte ELBO étant L(x,x') = L_2(x,x') + L_KL (N(mu, sigma) | N(0,1)) à traver le réseau.
+Ne pouvons pas rétropager à partir d'une distribution gaussienne pour cela, nous allons prendre un paramètre epsilon ~ N(0,1) et nous prenons mu + sigma * epsilon et faire la rétropgatation puis descente de gradient normal avec optim adam 
+
+
+##### UNET #####
+ Le unet est un réseau de neurones convolutionnel, c'est l'une des architectures les plus utilisées pour la segmentation d'images, il est constitué de :
+- un chemin d'encodeur :  il sert à extraire les caractéristiques de l’image (plisieurs encodeurs)
+- chemin de décodage  : il reconstruit une image de même taille que l'entrée contenant des prédictions pixel par pixel(plusieurs décodeur
+- bottleneck : un bloc entre l'encodeur et le décodeur similaire à un pont
+
+**Encodeur : 2 convolutions 2D, 2 RELU, max pooling (réduire à moitié la dimension). 
+
+Mathématiquement, 
+- Une convolution 2D d’un filtre W sur une image I  : I*W(x,y) = sum_i sum_j I(x+i, y+j).W(i, j)
+- Le max pooling dpour chq bloc 2×2, on prend le pixel le plus grand  : P(x,y) = max { I(2x, 2y), I(2x +1, 2y, I(2x, 2y+1), I(2x+1, 2y +1)} 
+
+**Bottleneck : image très réduite mais continent des features importantws : 2 conv2D + Relu sans pooling
+
+** Décodeur : Conv2D transposée qui double la taille de l'image encodé, puis concaténation avec les features de l'encodeur correspondants via une skip connection (concaténieur les carac de l'encodeur avec celles du décodeur au mm niveau)
+
+derniere convolution 1*1 transforme les caractéristiques finales en une image 

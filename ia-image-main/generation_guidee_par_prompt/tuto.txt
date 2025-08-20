@@ -1,0 +1,35 @@
+À faire pour télécharger le jeu de données coco :
+
+mkdir -p data/coco && cd data/coco
+wget http://images.cocodataset.org/annotations/annotations_trainval2017.zip
+wget http://images.cocodataset.org/zips/train2017.zip
+wget http://images.cocodataset.org/zips/val2017.zip
+unzip annotations_trainval2017.zip
+unzip train2017.zip
+unzip val2017.zip
+
+
+
+POUR NE PAS AJOUTER TOUTES LES IMAGES AU GIT
+ajouter un fichier .gitignore
+y mettre data/ pour éviter que le contenu du dossier data soit copié sur le git
+
+
+
+
+commande pour activer l'environment virtuel: source ~/virtual_environments/env1/bin/activate
+chemin pour l'interpréteur python: ~/virtual_environments/env1/bin/python
+
+
+
+
+
+
+POUR FAIRE TOURNER LE CODE EN FOND:
+screen pour lancer
+screen -list pour voir les trucs qui tournent
+screen -r pour rattacher le processus
+controle a puis d pour quitter
+
+#changer de gpu
+CUDA_VISIBLE_DEVICES=0 python code.py

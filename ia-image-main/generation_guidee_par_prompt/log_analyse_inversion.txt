@@ -1,0 +1,148 @@
+
+=== Catégorie : color_only ===
+Prompts: "un carré rouge au milieu" <-> "un carré bleu au milieu"
+ OpenAI CLIP similarity : 0.8569
+ Clip à la main similarity : 0.9253
+
+Prompts: "un disque vert en haut à droite" <-> "un disque jaune en haut à droite"
+ OpenAI CLIP similarity : 0.8965
+ Clip à la main similarity : 0.7375
+
+Prompts: "un losange violet en bas à gauche" <-> "un losange orange en bas à gauche"
+ OpenAI CLIP similarity : 0.8691
+ Clip à la main similarity : 0.8316
+
+Prompts: "un cercle bleu en haut à gauche" <-> "un cercle rouge en haut à gauche"
+ OpenAI CLIP similarity : 0.9082
+ Clip à la main similarity : 0.7993
+
+
+=== Catégorie : shape_only ===
+Prompts: "un cercle rouge moyen en haut à gauche" <-> "un disque rouge moyen en haut à gauche"
+ OpenAI CLIP similarity : 0.8887
+ Clip à la main similarity : 1.0000
+
+Prompts: "un carré bleu petit en bas à droite" <-> "un losange bleu petit en bas à droite"
+ OpenAI CLIP similarity : 0.9678
+ Clip à la main similarity : 0.4089
+
+Prompts: "un losange vert grand en bas à gauche" <-> "un cercle vert grand en bas à gauche"
+ OpenAI CLIP similarity : 0.9453
+ Clip à la main similarity : 0.6849
+
+Prompts: "un disque jaune moyen au milieu" <-> "un carré jaune moyen au milieu"
+ OpenAI CLIP similarity : 0.9380
+ Clip à la main similarity : 0.7552
+
+
+=== Catégorie : size_only ===
+Prompts: "un petit carré bleu au milieu" <-> "un grand carré bleu au milieu"
+ OpenAI CLIP similarity : 0.9121
+ Clip à la main similarity : 0.9193
+
+Prompts: "un disque moyen rouge en bas à droite" <-> "un disque petit rouge en bas à droite"
+ OpenAI CLIP similarity : 0.9746
+ Clip à la main similarity : 0.5382
+
+Prompts: "un cercle grand vert en haut à gauche" <-> "un cercle petit vert en haut à gauche"
+ OpenAI CLIP similarity : 0.9658
+ Clip à la main similarity : 0.6094
+
+Prompts: "un losange petit violet au milieu" <-> "un losange grand violet au milieu"
+ OpenAI CLIP similarity : 0.9624
+ Clip à la main similarity : 0.6336
+
+
+=== Catégorie : position_only ===
+Prompts: "un carré rouge au milieu" <-> "un carré rouge en haut à gauche"
+ OpenAI CLIP similarity : 0.9473
+ Clip à la main similarity : 0.5676
+
+Prompts: "un disque bleu en bas à droite" <-> "un disque bleu en haut à droite"
+ OpenAI CLIP similarity : 0.9761
+ Clip à la main similarity : 0.5293
+
+Prompts: "un cercle vert en bas à gauche" <-> "un cercle vert en haut à droite"
+ OpenAI CLIP similarity : 0.9683
+ Clip à la main similarity : 0.5044
+
+Prompts: "un losange jaune en haut à droite" <-> "un losange jaune en bas à gauche"
+ OpenAI CLIP similarity : 0.9717
+ Clip à la main similarity : 0.6345
+
+
+=== Catégorie : shape_and_position ===
+Prompts: "un disque rouge au milieu" <-> "un carré rouge en haut à gauche"
+ OpenAI CLIP similarity : 0.8643
+ Clip à la main similarity : 0.4110
+
+Prompts: "un cercle bleu en bas à droite" <-> "un losange bleu en haut à droite"
+ OpenAI CLIP similarity : 0.9468
+ Clip à la main similarity : 0.0833
+
+Prompts: "un carré vert en haut à gauche" <-> "un disque vert en bas à droite"
+ OpenAI CLIP similarity : 0.8828
+ Clip à la main similarity : 0.3764
+
+Prompts: "un losange jaune au milieu" <-> "un cercle jaune en haut à droite"
+ OpenAI CLIP similarity : 0.9082
+ Clip à la main similarity : 0.6294
+
+
+=== Catégorie : color_and_position ===
+Prompts: "un disque rouge en haut à gauche" <-> "un disque bleu en bas à droite"
+ OpenAI CLIP similarity : 0.8545
+ Clip à la main similarity : 0.3742
+
+Prompts: "un carré vert au milieu" <-> "un carré jaune en haut à gauche"
+ OpenAI CLIP similarity : 0.8623
+ Clip à la main similarity : 0.6069
+
+Prompts: "un cercle violet en bas à gauche" <-> "un cercle rouge en haut à droite"
+ OpenAI CLIP similarity : 0.8481
+ Clip à la main similarity : 0.4712
+
+Prompts: "un losange bleu en haut à droite" <-> "un losange rouge en bas à gauche"
+ OpenAI CLIP similarity : 0.8755
+ Clip à la main similarity : 0.2076
+
+
+=== Catégorie : many_objects ===
+Prompts: "un cercle rouge en haut à gauche et un carré bleu en bas à droite" <-> "un carré bleu en bas à droite et un cercle rouge en haut à gauche"
+ OpenAI CLIP similarity : 0.9688
+ Clip à la main similarity : 0.4776
+
+Prompts: "un losange vert en bas à gauche, un disque jaune en haut à gauche, un carré jaune au milieu et un disque vert en bas à droite" <-> "un disque jaune en haut et un losange vert en bas"
+ OpenAI CLIP similarity : 0.9502
+ Clip à la main similarity : 0.4520
+
+Prompts: "un cercle rouge au milieu et un carré bleu en bas à droite" <-> "un cercle bleu au milieu et un carré rouge en bas à droite"
+ OpenAI CLIP similarity : 0.9150
+ Clip à la main similarity : 0.8948
+
+Prompts: "un cercle rouge en haut à gauche et un carré bleu en bas à droite" <-> "un carré rouge en haut à gauche et un cercle bleu en bas à droite"
+ OpenAI CLIP similarity : 0.9263
+ Clip à la main similarity : 0.8288
+
+Prompts: "un cercle rouge en haut à gauche et un disque vert en bas à droite" <-> "un cercle rouge en bas à droite et un disque vert en haut à gauche"
+ OpenAI CLIP similarity : 0.9971
+ Clip à la main similarity : 0.7008
+
+
+=== Catégorie : all_different ===
+Prompts: "un petit disque rouge en bas à gauche" <-> "un grand carré bleu en haut à droite"
+ OpenAI CLIP similarity : 0.7778
+ Clip à la main similarity : 0.0769
+
+Prompts: "un losange violet en haut à gauche" <-> "un cercle jaune en bas à droite"
+ OpenAI CLIP similarity : 0.8311
+ Clip à la main similarity : 0.3204
+
+Prompts: "un carré moyen vert au milieu" <-> "un disque petit orange en haut à droite"
+ OpenAI CLIP similarity : 0.7778
+ Clip à la main similarity : -0.2027
+
+Prompts: "un cercle rouge en haut à gauche" <-> "un losange bleu en bas à droite"
+ OpenAI CLIP similarity : 0.8667
+ Clip à la main similarity : 0.1103
+

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Générateur d'Images</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 30px;
+            background-color: #f5f5f5;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            width: 60%;
+            padding: 10px;
+            font-size: 16px;
+        }
+        input[type="submit"] {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-left: 10px;
+        }
+        img {
+            max-width: 512px;
+            margin-top: 20px;
+            border: 2px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <h1>Générateur d'Image à partir de Texte</h1>
+    <form method="post">
+        <input type="text" name="prompt" placeholder="Entrez une description..." value="{{ prompt }}" required>
+        <input type="submit" value="Générer">
+    </form>
+
+    {% if image_data %}
+        <h2>Image Générée :</h2>
+        <img src="data:image/png;base64,{{ image_data }}" alt="Image générée">
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Transcripteur Audio & Générateur d'Image</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 2rem;
+        }
+        button {
+            margin-right: 1rem;
+            padding: 0.5rem 1rem;
+        }
+        #transcript {
+            white-space: pre-wrap;
+            margin-top: 1rem;
+            font-size: 1.1rem;
+            color: #333;
+        }
+        #imageContainer img {
+            margin-top: 1rem;
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎤 Parlez pour générer une image</h1>
+    <button id="startBtn">Commencer l'enregistrement</button>
+    <button id="stopBtn" disabled>Arrêter & Transcrire</button>
+    <p id="status"></p>
+    
+    <h3>Transcription :</h3>
+    <pre id="transcript"></pre>
+
+    <h3>Image générée :</h3>
+    <div id="imageContainer"></div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>

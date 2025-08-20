@@ -1,0 +1,1 @@
+Ce dossier comprend les notebooks pédagogiques, et un site détaillant le fonctionnement théoriques des différents modèles implémentés dans le dossier `implementations`

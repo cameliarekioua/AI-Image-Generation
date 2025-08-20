@@ -1,0 +1,146 @@
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #1a1b26;
+    color: #a9b1d6;
+}
+
+.math-container {
+    background-color: #24283b;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    margin: 20px 0;
+    border: 1px solid #414868;
+}
+
+h1 {
+    color: #7aa2f7;
+    text-align: center;
+    margin-bottom: 40px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    font-size: 2.5em;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+p {
+    color: #c0caf5;
+    margin: 15px 0;
+}
+
+/* Style pour les formules en ligne */
+.MathJax {
+    margin: 0 3px;
+    color: #bb9af7 !important;
+}
+
+/* Style pour les formules centrées */
+.MathJax_Display {
+    margin: 20px 0 !important;
+    padding: 15px;
+    background-color: #1f2335;
+    border-radius: 4px;
+    border: 1px solid #414868;
+}
+
+a {
+    color: #7dcfff;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: #b4f9f8;
+}
+
+.image-container {
+    width: 100%;
+    margin: 30px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.centered-image {
+    max-width: 80%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    border: 1px solid #414868;
+}
+
+/* Nouvelle classe spécifique pour l'image de bruit gaussien */
+.noise-image {
+    max-width: 20%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    border: 1px solid #414868;
+}
+
+/* Nouvelle classe spécifique pour l'image du noising process */
+.noising-image {
+    max-width: 90%;  /* Plus grande que les autres images */
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    border: 1px solid #414868;
+    margin: 20px 0;
+}
+
+.centered-image:hover {
+    transform: scale(1.01);
+    transition: transform 0.3s ease;
+}
+
+.image-caption {
+    text-align: center;
+    color: #7aa2f7;
+    font-size: 0.85em;
+    font-style: italic;
+    opacity: 0.8;
+}
+
+
+
+
+/* Style pour les onglets */
+.tab-container {
+    margin: 20px 0;
+    width: 100%;
+}
+
+.tab-buttons {
+    display: flex;
+    border-bottom: 2px solid #ccc;
+    margin-bottom: 20px;
+}
+
+.tab-button {
+    background-color: #f1f1f1;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    flex: 1;
+    transition: background-color 0.3s;
+}
+
+.tab-button:hover {
+    background-color: #ddd;
+}
+
+.tab-button.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+/* Contenu des onglets */
+.invisible {
+    display: none;
+}
